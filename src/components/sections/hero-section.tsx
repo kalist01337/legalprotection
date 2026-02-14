@@ -13,7 +13,7 @@ export function HeroSection() {
     "inline-flex h-[46px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-full border px-5 text-sm font-semibold leading-none transition sm:h-[50px] sm:w-[196px]";
 
   return (
-    <section className="section-shell pb-20 pt-10 sm:pb-24 sm:pt-12 lg:pt-20">
+    <section className="section-shell pb-12 pt-10 sm:pb-24 sm:pt-12 lg:pt-20">
       <Reveal replay>
         <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/35 px-4 py-2 text-xs uppercase tracking-[0.28em] text-goldSoft/90">
           <ShieldIcon className="h-3.5 w-3.5" />

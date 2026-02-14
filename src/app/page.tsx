@@ -47,7 +47,7 @@ export default function HomePage() {
     <>
       <Header />
 
-      <div className="relative -mt-[148px] min-h-[84vh] overflow-hidden pt-[148px] sm:-mt-[188px] sm:min-h-[88vh] sm:pt-[188px] lg:-mt-[206px] lg:min-h-[86vh] lg:pt-[206px]">
+      <div className="relative -mt-[148px] min-h-[70vh] overflow-hidden pt-[148px] sm:-mt-[188px] sm:min-h-[88vh] sm:pt-[188px] lg:-mt-[206px] lg:min-h-[86vh] lg:pt-[206px]">
         <div className="hero-media-mask pointer-events-none absolute inset-0">
           <AdaptiveHeroMedia videoSrc={siteConfig.media.heroVideo} posterSrc={siteConfig.media.heroImage} />
           <div className="hero-media-overlay absolute inset-0 bg-[linear-gradient(120deg,rgba(8,8,8,0.62)_0%,rgba(8,8,8,0.48)_45%,rgba(8,8,8,0.65)_100%)]" />

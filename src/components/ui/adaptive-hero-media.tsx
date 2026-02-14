@@ -68,16 +68,36 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     const video = videoRef.current;
     video.muted = true;
     const markFailed = () => setVideoFailed(true);
+    const markReady = () => setVideoReady(true);
+    const tryPlay = () => video.play().then(markReady).catch(() => undefined);
+
     video.addEventListener("error", markFailed);
-    video.addEventListener("stalled", markFailed);
-    video.addEventListener("abort", markFailed);
+    video.addEventListener("loadedmetadata", markReady);
+    video.addEventListener("canplay", markReady);
+    video.addEventListener("playing", markReady);
 
     if (isIOS) {
-      void video.play().catch(() => undefined);
+      const startOnGesture = () => {
+        void tryPlay();
+      };
+
+      const retryTimer = window.setTimeout(() => {
+        void tryPlay();
+      }, 650);
+
+      video.load();
+      void tryPlay();
+      window.addEventListener("touchstart", startOnGesture, { passive: true, once: true });
+      window.addEventListener("pointerdown", startOnGesture, { passive: true, once: true });
+
       return () => {
+        window.clearTimeout(retryTimer);
+        window.removeEventListener("touchstart", startOnGesture);
+        window.removeEventListener("pointerdown", startOnGesture);
         video.removeEventListener("error", markFailed);
-        video.removeEventListener("stalled", markFailed);
-        video.removeEventListener("abort", markFailed);
+        video.removeEventListener("loadedmetadata", markReady);
+        video.removeEventListener("canplay", markReady);
+        video.removeEventListener("playing", markReady);
       };
     }
 
@@ -86,7 +106,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          void video.play().catch(() => undefined);
+          void tryPlay();
         } else {
           video.pause();
         }
@@ -98,8 +118,9 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     return () => {
       observer.disconnect();
       video.removeEventListener("error", markFailed);
-      video.removeEventListener("stalled", markFailed);
-      video.removeEventListener("abort", markFailed);
+      video.removeEventListener("loadedmetadata", markReady);
+      video.removeEventListener("canplay", markReady);
+      video.removeEventListener("playing", markReady);
     };
   }, [useVideo, isIOS, videoFailed]);
 
@@ -129,7 +150,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           poster={posterSrc}
           disablePictureInPicture
           onLoadedData={() => setVideoReady(true)}
