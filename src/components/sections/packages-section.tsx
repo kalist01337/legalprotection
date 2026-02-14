@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 
 export function PackagesSection() {
   return (
-    <section id="packages" className="section-shell scroll-mt-24 sm:scroll-mt-28 lg:scroll-mt-32 pb-24">
+    <section id="packages" className="section-shell scroll-mt-24 pb-24 sm:scroll-mt-28 lg:scroll-mt-32">
       <div className="mb-10 flex items-end justify-between gap-6">
         <div>
           <p className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.25em] text-goldSoft/80">
