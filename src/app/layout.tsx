@@ -1,7 +1,7 @@
 ﻿import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { absoluteUrl, siteConfig } from "@/config/site";
+import { absoluteUrl, siteConfig, withBasePath } from "@/config/site";
 
 const serif = Playfair_Display({
   subsets: ["latin", "cyrillic"],
@@ -29,6 +29,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.seo.siteUrl),
   title: siteConfig.seo.title,
   description: siteConfig.seo.description,
+  icons: {
+    icon: withBasePath("/123.png"),
+    shortcut: withBasePath("/123.png"),
+    apple: withBasePath("/123.png"),
+  },
   alternates: {
     canonical: absoluteUrl("/"),
   },
@@ -72,4 +77,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-
