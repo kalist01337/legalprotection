@@ -60,7 +60,7 @@ export const siteConfig = {
     locale: "ru_RU",
   },
   media: {
-    logo: withBasePath("/123.webp"),
+    logo: withBasePath("/gold.png"),
     heroImage: withBasePath("/media/hero-poster.jpg"),
     officeImage: withBasePath("/media/nas.jpg"),
     heroVideo: withBasePath("/Timeline.mp4"),
