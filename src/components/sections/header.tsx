@@ -6,7 +6,7 @@ export function Header() {
   return (
     <header className="site-header sticky top-0 z-50 pt-1 sm:pt-1.5">
       <div className="section-shell">
-        <div className="mx-auto w-full max-w-[1240px] overflow-hidden rounded-[1.7rem] border border-gold/35 bg-[#080808]/92 shadow-[0_22px_55px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+        <div className="site-header-frame mx-auto w-full max-w-[1240px] overflow-hidden rounded-[1.7rem] border border-gold/35 bg-[#080808]/92 shadow-[0_12px_26px_rgba(0,0,0,0.38)] backdrop-blur-[2px] sm:shadow-[0_22px_55px_rgba(0,0,0,0.5)] sm:backdrop-blur-xl">
           <div className="relative px-3 py-0.5 sm:px-6 sm:py-1">
             <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gold-line" />
             <div className="pointer-events-none absolute inset-x-10 bottom-0 h-px bg-gold-line" />
@@ -16,7 +16,7 @@ export function Header() {
                 <img
                   src={siteConfig.media.logo}
                   alt={`${siteConfig.brand.name} logo`}
-                  className="-my-3 block h-auto w-[168px] max-w-full object-contain brightness-[0.82] contrast-90 saturate-75 blur-[0.35px] [transform:translateZ(0)] sm:-my-4 sm:w-[282px] lg:-my-5 lg:w-[366px] xl:w-[440px]"
+                  className="-my-3 block h-auto w-[168px] max-w-full object-contain brightness-[0.82] contrast-90 saturate-75 blur-0 [transform:translateZ(0)] sm:-my-4 sm:w-[282px] sm:blur-[0.35px] lg:-my-5 lg:w-[366px] xl:w-[440px]"
                   style={{ imageRendering: "auto" }}
                 />
               </Link>

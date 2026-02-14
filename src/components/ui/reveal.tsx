@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -13,8 +13,18 @@ type RevealProps = {
 
 export function Reveal({ children, className, delay = 0, replay = false, amount = 0.2 }: RevealProps) {
   const reduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
-  if (reduceMotion) {
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
+  // Mobile: avoid expensive whileInView animation to keep scroll smooth.
+  if (reduceMotion || isMobile) {
     return <div className={className}>{children}</div>;
   }
 
