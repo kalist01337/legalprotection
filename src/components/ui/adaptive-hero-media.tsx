@@ -30,11 +30,16 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     const isDataSaver = Boolean(connection?.saveData);
     const isSlowNetwork = typeof connection?.effectiveType === "string" && connection.effectiveType.includes("2g");
 
+    const ua = navigator.userAgent || "";
+    const isIOS =
+      /iP(hone|ad|od)/.test(ua) || (navigator.platform === "MacIntel" && (navigator as { maxTouchPoints?: number }).maxTouchPoints! > 1);
+
     const deviceMemory = nav.deviceMemory ?? 8;
     const cores = navigator.hardwareConcurrency ?? 8;
     const isLowEnd = deviceMemory <= 4 || cores <= 4;
 
-    const allowOnMobile = !isSmallScreen || !isLowEnd;
+    // iOS Safari can report low core count despite good media playback, so do not block video there.
+    const allowOnMobile = isIOS ? true : !isSmallScreen || !isLowEnd;
     setUseVideo(!prefersReducedMotion && !isDataSaver && !isSlowNetwork && allowOnMobile);
   }, []);
 
