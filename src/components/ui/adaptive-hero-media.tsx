@@ -54,13 +54,9 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     const isSlowNetwork =
       typeof connection?.effectiveType === "string" &&
       connection.effectiveType.includes("2g");
-    const isSmallScreen = window.matchMedia("(max-width: 767px)").matches;
-    const deviceMemory = nav.deviceMemory ?? 8;
-    const cores = navigator.hardwareConcurrency ?? 8;
-    const isLowEnd = deviceMemory <= 4 || cores <= 4;
-    const allowOnMobile = !isSmallScreen || !isLowEnd;
 
-    setDisableVideo(isDataSaver || isSlowNetwork || !allowOnMobile);
+    // Keep video enabled on modern mobile and disable only for explicit data-saving scenarios.
+    setDisableVideo(isDataSaver || isSlowNetwork);
   }, []);
 
   useEffect(() => {
@@ -70,6 +66,9 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+    video.setAttribute("x5-playsinline", "true");
 
     const onError = () => setVideoFailed(true);
     video.addEventListener("error", onError);
@@ -79,19 +78,25 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     if (isIOS) {
       video.load();
       void tryPlay();
-      const t1 = window.setTimeout(() => void tryPlay(), 400);
-      const t2 = window.setTimeout(() => void tryPlay(), 1200);
+      const t1 = window.setTimeout(() => void tryPlay(), 250);
+      const t2 = window.setTimeout(() => void tryPlay(), 900);
+      const t3 = window.setTimeout(() => void tryPlay(), 1800);
       const startOnGesture = () => {
         void tryPlay();
       };
       window.addEventListener("touchstart", startOnGesture, { passive: true });
+      window.addEventListener("touchend", startOnGesture, { passive: true });
       window.addEventListener("pointerdown", startOnGesture, { passive: true });
+      document.addEventListener("visibilitychange", startOnGesture);
 
       return () => {
         window.clearTimeout(t1);
         window.clearTimeout(t2);
+        window.clearTimeout(t3);
         window.removeEventListener("touchstart", startOnGesture);
+        window.removeEventListener("touchend", startOnGesture);
         window.removeEventListener("pointerdown", startOnGesture);
+        document.removeEventListener("visibilitychange", startOnGesture);
         video.removeEventListener("error", onError);
       };
     }
@@ -138,6 +143,16 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           poster={posterSrc}
           disablePictureInPicture
           src={videoSrc}
+          onClick={() => {
+            if (videoRef.current) {
+              void videoRef.current.play().catch(() => undefined);
+            }
+          }}
+          onTouchStart={() => {
+            if (videoRef.current) {
+              void videoRef.current.play().catch(() => undefined);
+            }
+          }}
           onError={() => setVideoFailed(true)}
           onCanPlay={() => {
             if (isIOS && videoRef.current) {
