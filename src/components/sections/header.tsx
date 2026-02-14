@@ -7,21 +7,21 @@ export function Header() {
     <header className="site-header sticky top-0 z-50 pt-1 sm:pt-1.5">
       <div className="section-shell">
         <div className="mx-auto w-full max-w-[1240px] overflow-hidden rounded-[1.7rem] border border-gold/35 bg-[#080808]/92 shadow-[0_22px_55px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-          <div className="relative px-4 py-0.5 sm:px-6 sm:py-1">
+          <div className="relative px-3 py-0.5 sm:px-6 sm:py-1">
             <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gold-line" />
             <div className="pointer-events-none absolute inset-x-10 bottom-0 h-px bg-gold-line" />
 
-            <div className="flex h-[114px] items-center justify-between gap-2 sm:h-[130px] lg:h-[146px]">
+            <div className="flex h-[96px] items-center justify-between gap-2 sm:h-[130px] lg:h-[146px]">
               <Link href="/" className="flex items-center">
                 <img
                   src={siteConfig.media.logo}
                   alt={`${siteConfig.brand.name} logo`}
-                  className="-my-3 block h-auto w-[214px] max-w-full object-contain brightness-[0.82] contrast-90 saturate-75 blur-[0.35px] [transform:translateZ(0)] sm:-my-4 sm:w-[282px] lg:-my-5 lg:w-[366px] xl:w-[440px]"
+                  className="-my-3 block h-auto w-[168px] max-w-full object-contain brightness-[0.82] contrast-90 saturate-75 blur-[0.35px] [transform:translateZ(0)] sm:-my-4 sm:w-[282px] lg:-my-5 lg:w-[366px] xl:w-[440px]"
                   style={{ imageRendering: "auto" }}
                 />
               </Link>
 
-              <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-1.5 sm:gap-3">
                 <a
                   href={siteConfig.contacts.phoneHref}
                   className="hidden items-center gap-2 rounded-full border border-gold/35 px-4 py-0.5 text-[13px] text-ivory/90 transition hover:border-gold/55 hover:text-goldSoft lg:inline-flex"
@@ -31,7 +31,7 @@ export function Header() {
                 </a>
                 <a
                   href="#contacts"
-                  className="inline-flex items-center gap-2 rounded-full border border-gold/55 bg-gold/15 px-4 py-0.5 text-[13px] font-semibold text-goldSoft transition hover:bg-gold/25"
+                  className="inline-flex items-center gap-2 rounded-full border border-gold/55 bg-gold/15 px-3 py-1 text-[12px] font-semibold text-goldSoft transition hover:bg-gold/25 sm:px-4 sm:py-0.5 sm:text-[13px]"
                 >
                   <MessageIcon className="h-4 w-4" />
                   Консультация
@@ -46,7 +46,7 @@ export function Header() {
                     <a
                       key={item.href}
                       href={item.href}
-                      className="group relative shrink-0 rounded-xl px-4 py-0.5 text-center font-serif text-[0.68rem] uppercase tracking-[0.2em] text-ivory/90 transition hover:bg-gold/10 hover:text-goldSoft sm:px-5 sm:text-[0.74rem]"
+                      className="group relative shrink-0 rounded-xl px-3 py-1 text-center font-serif text-[0.64rem] uppercase tracking-[0.18em] text-ivory/90 transition hover:bg-gold/10 hover:text-goldSoft sm:px-5 sm:py-0.5 sm:text-[0.74rem]"
                     >
                       {item.label}
                       <span className="pointer-events-none absolute inset-x-3 -bottom-px h-px scale-x-0 bg-gold/80 transition-transform duration-300 group-hover:scale-x-100" />

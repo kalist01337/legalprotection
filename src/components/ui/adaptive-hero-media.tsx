@@ -21,12 +21,11 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isSmallScreen = window.innerWidth < 992;
     const connection = (navigator as NavigatorWithConnection).connection;
     const isDataSaver = Boolean(connection?.saveData);
     const isSlowNetwork = typeof connection?.effectiveType === "string" && connection.effectiveType.includes("2g");
 
-    setUseVideo(!prefersReducedMotion && !isSmallScreen && !isDataSaver && !isSlowNetwork);
+    setUseVideo(!prefersReducedMotion && !isDataSaver && !isSlowNetwork);
   }, []);
 
   return (
@@ -46,7 +45,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           muted
           loop
           playsInline
-          preload="none"
+          preload="metadata"
           poster={posterSrc}
           disablePictureInPicture
         >

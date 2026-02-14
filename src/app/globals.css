@@ -22,7 +22,7 @@ body {
 }
 
 html {
-  scroll-padding-top: 6.5rem;
+  scroll-padding-top: 8rem;
 }
 
 @media (min-width: 640px) {
@@ -40,6 +40,7 @@ html {
 body {
   min-height: 100vh;
   font-feature-settings: "liga" 1, "calt" 1;
+  overflow-x: clip;
 }
 
 * {
@@ -47,7 +48,33 @@ body {
 }
 
 .section-shell {
-  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-7xl;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+@media (min-width: 640px) {
+  .section-shell {
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-shell {
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
+  }
+}
+
+@media (max-width: 430px) {
+  .site-header {
+    padding-top: 0.125rem;
+  }
+
+  .site-header nav a {
+    letter-spacing: 0.14em;
+  }
 }
 
 .section-divider {
