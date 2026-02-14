@@ -1,0 +1,83 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-main: #0b0b0b;
+  --bg-soft: #141414;
+  --text-main: #f6f2e8;
+  --text-muted: #d4ccb8;
+  --accent: #b89a62;
+  --accent-soft: #d2c09d;
+  --line: rgba(184, 154, 98, 0.25);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at 15% 0%, #1a1a1a 0%, #0b0b0b 48%, #070707 100%);
+  color: var(--text-main);
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-padding-top: 6.5rem;
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 7.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    scroll-padding-top: 8.5rem;
+  }
+}
+
+body {
+  min-height: 100vh;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(184, 154, 98, 0) 0%, rgba(184, 154, 98, 0.65) 50%, rgba(184, 154, 98, 0) 100%);
+}
+
+.card-premium {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(184, 154, 98, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+.gold-dot::before {
+  content: "";
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.6rem;
+  border-radius: 9999px;
+  background: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
