@@ -1,3 +1,3 @@
 # legalprotection
 
-Landing page project.
+page.
