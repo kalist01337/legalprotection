@@ -50,9 +50,9 @@ export default function HomePage() {
       <div className="relative -mt-[148px] min-h-[52vh] overflow-hidden pt-[148px] sm:-mt-[188px] sm:min-h-[88vh] sm:pt-[188px] lg:-mt-[206px] lg:min-h-[86vh] lg:pt-[206px]">
         <div className="hero-media-mask absolute inset-0">
           <AdaptiveHeroMedia videoSrc={siteConfig.media.heroVideo} posterSrc={siteConfig.media.heroImage} />
-          <div className="hero-media-overlay absolute inset-0 bg-[linear-gradient(120deg,rgba(8,8,8,0.62)_0%,rgba(8,8,8,0.48)_45%,rgba(8,8,8,0.65)_100%)]" />
-          <div className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgba(7,7,7,0.88)_0%,rgba(7,7,7,0.35)_48%,rgba(7,7,7,0)_100%)] sm:h-44 lg:h-52" />
-          <div className="absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(to_bottom,rgba(11,11,11,0)_0%,rgba(11,11,11,0.3)_32%,rgba(11,11,11,0.74)_74%,#0b0b0b_100%)] sm:h-44 lg:h-48" />
+          <div className="hero-media-overlay pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(8,8,8,0.62)_0%,rgba(8,8,8,0.48)_45%,rgba(8,8,8,0.65)_100%)]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgba(7,7,7,0.88)_0%,rgba(7,7,7,0.35)_48%,rgba(7,7,7,0)_100%)] sm:h-44 lg:h-52" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(to_bottom,rgba(11,11,11,0)_0%,rgba(11,11,11,0.3)_32%,rgba(11,11,11,0.74)_74%,#0b0b0b_100%)] sm:h-44 lg:h-48" />
         </div>
 
         <div className="relative z-10">

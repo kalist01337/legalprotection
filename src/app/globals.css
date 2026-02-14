@@ -113,8 +113,15 @@ body {
   .about-bg-image {
     -webkit-mask-image: none !important;
     mask-image: none !important;
-    transform: scale(1.04);
+    transform: scale(1.12);
     transform-origin: center;
+    filter: brightness(1.35) contrast(1.02) saturate(1.03);
+  }
+
+  .about-mobile-feather {
+    box-shadow:
+      inset 0 0 0 1px rgba(11, 11, 11, 0.78),
+      inset 0 0 140px 38px rgba(11, 11, 11, 0.76);
   }
 
   .card-premium {

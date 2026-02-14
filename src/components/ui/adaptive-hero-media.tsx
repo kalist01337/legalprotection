@@ -81,21 +81,31 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
       const t1 = window.setTimeout(() => void tryPlay(), 250);
       const t2 = window.setTimeout(() => void tryPlay(), 900);
       const t3 = window.setTimeout(() => void tryPlay(), 1800);
+      const t4 = window.setTimeout(() => void tryPlay(), 3200);
+      const watchdog = window.setInterval(() => {
+        if (document.visibilityState === "visible" && video.paused) {
+          void tryPlay();
+        }
+      }, 1200);
       const startOnGesture = () => {
         void tryPlay();
       };
       window.addEventListener("touchstart", startOnGesture, { passive: true });
       window.addEventListener("touchend", startOnGesture, { passive: true });
       window.addEventListener("pointerdown", startOnGesture, { passive: true });
+      document.addEventListener("touchstart", startOnGesture, { passive: true, capture: true });
       document.addEventListener("visibilitychange", startOnGesture);
 
       return () => {
         window.clearTimeout(t1);
         window.clearTimeout(t2);
         window.clearTimeout(t3);
+        window.clearTimeout(t4);
+        window.clearInterval(watchdog);
         window.removeEventListener("touchstart", startOnGesture);
         window.removeEventListener("touchend", startOnGesture);
         window.removeEventListener("pointerdown", startOnGesture);
+        document.removeEventListener("touchstart", startOnGesture, { capture: true });
         document.removeEventListener("visibilitychange", startOnGesture);
         video.removeEventListener("error", onError);
       };
@@ -122,7 +132,20 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
   }, [disableVideo, isIOS, videoFailed]);
 
   return (
-    <div ref={containerRef} className="absolute inset-0">
+    <div
+      ref={containerRef}
+      className="absolute inset-0"
+      onClick={() => {
+        if (videoRef.current) {
+          void videoRef.current.play().catch(() => undefined);
+        }
+      }}
+      onTouchStart={() => {
+        if (videoRef.current) {
+          void videoRef.current.play().catch(() => undefined);
+        }
+      }}
+    >
       <img
         src={posterSrc}
         alt=""
@@ -139,7 +162,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           muted
           loop
           playsInline
-          preload="metadata"
+          preload={isIOS ? "auto" : "metadata"}
           poster={posterSrc}
           disablePictureInPicture
           src={videoSrc}

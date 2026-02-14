@@ -17,11 +17,12 @@ export function AboutSection() {
         />
 
         <div className="absolute inset-0 bg-black/14" />
-        <div className="absolute inset-x-0 top-0 h-72 bg-[linear-gradient(to_bottom,#0b0b0b_0%,rgba(11,11,11,0.78)_32%,rgba(11,11,11,0)_100%)] sm:h-72" />
-        <div className="absolute inset-x-0 bottom-0 h-96 bg-[linear-gradient(to_top,#0b0b0b_0%,rgba(11,11,11,0.82)_38%,rgba(11,11,11,0)_100%)] sm:h-96" />
-        <div className="absolute inset-y-0 left-0 w-72 bg-[linear-gradient(to_right,#0b0b0b_0%,rgba(11,11,11,0.8)_38%,rgba(11,11,11,0)_100%)] sm:w-72" />
-        <div className="absolute inset-y-0 right-0 w-72 bg-[linear-gradient(to_left,#0b0b0b_0%,rgba(11,11,11,0.8)_38%,rgba(11,11,11,0)_100%)] sm:w-72" />
+        <div className="absolute inset-x-0 top-0 h-72 bg-[linear-gradient(to_bottom,#0b0b0b_0%,rgba(11,11,11,0.62)_32%,rgba(11,11,11,0)_100%)] sm:h-72 sm:bg-[linear-gradient(to_bottom,#0b0b0b_0%,rgba(11,11,11,0.78)_32%,rgba(11,11,11,0)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-96 bg-[linear-gradient(to_top,#0b0b0b_0%,rgba(11,11,11,0.68)_38%,rgba(11,11,11,0)_100%)] sm:h-96 sm:bg-[linear-gradient(to_top,#0b0b0b_0%,rgba(11,11,11,0.82)_38%,rgba(11,11,11,0)_100%)]" />
+        <div className="absolute inset-y-0 left-0 w-72 bg-[linear-gradient(to_right,#0b0b0b_0%,rgba(11,11,11,0.7)_38%,rgba(11,11,11,0)_100%)] sm:w-72 sm:bg-[linear-gradient(to_right,#0b0b0b_0%,rgba(11,11,11,0.8)_38%,rgba(11,11,11,0)_100%)]" />
+        <div className="absolute inset-y-0 right-0 w-72 bg-[linear-gradient(to_left,#0b0b0b_0%,rgba(11,11,11,0.7)_38%,rgba(11,11,11,0)_100%)] sm:w-72 sm:bg-[linear-gradient(to_left,#0b0b0b_0%,rgba(11,11,11,0.8)_38%,rgba(11,11,11,0)_100%)]" />
         <div className="absolute inset-0 md:hidden bg-[radial-gradient(circle_at_50%_52%,rgba(11,11,11,0)_50%,rgba(11,11,11,0.56)_100%)]" />
+        <div className="about-mobile-feather absolute inset-0 md:hidden" />
         <div className="absolute inset-x-0 top-[58%] h-24 bg-[linear-gradient(to_bottom,rgba(11,11,11,0),rgba(11,11,11,0.22),rgba(11,11,11,0))]" />
 
         <div className="relative z-10 max-w-3xl px-6 py-10 sm:px-10 sm:py-12">
