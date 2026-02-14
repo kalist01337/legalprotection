@@ -27,6 +27,8 @@ const detectIOS = () => {
 export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProps) {
   const [useVideo, setUseVideo] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -61,14 +63,22 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
   }, []);
 
   useEffect(() => {
-    if (!useVideo || !videoRef.current) return;
+    if (!useVideo || videoFailed || !videoRef.current) return;
 
     const video = videoRef.current;
     video.muted = true;
+    const markFailed = () => setVideoFailed(true);
+    video.addEventListener("error", markFailed);
+    video.addEventListener("stalled", markFailed);
+    video.addEventListener("abort", markFailed);
 
     if (isIOS) {
       void video.play().catch(() => undefined);
-      return;
+      return () => {
+        video.removeEventListener("error", markFailed);
+        video.removeEventListener("stalled", markFailed);
+        video.removeEventListener("abort", markFailed);
+      };
     }
 
     if (!containerRef.current) return;
@@ -85,8 +95,19 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     );
 
     observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [useVideo, isIOS]);
+    return () => {
+      observer.disconnect();
+      video.removeEventListener("error", markFailed);
+      video.removeEventListener("stalled", markFailed);
+      video.removeEventListener("abort", markFailed);
+    };
+  }, [useVideo, isIOS, videoFailed]);
+
+  useEffect(() => {
+    if (!useVideo) return;
+    setVideoReady(false);
+    setVideoFailed(false);
+  }, [useVideo, videoSrc]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -98,10 +119,12 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         loading="eager"
         decoding="async"
       />
-      {useVideo ? (
+      {useVideo && !videoFailed ? (
         <video
           ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover opacity-72"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
+            videoReady ? "opacity-72" : "opacity-0"
+          }`}
           autoPlay
           muted
           loop
@@ -109,6 +132,8 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           preload="auto"
           poster={posterSrc}
           disablePictureInPicture
+          onLoadedData={() => setVideoReady(true)}
+          onError={() => setVideoFailed(true)}
           onCanPlay={() => {
             if (isIOS && videoRef.current) {
               void videoRef.current.play().catch(() => undefined);
