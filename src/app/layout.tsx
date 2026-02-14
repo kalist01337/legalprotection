@@ -30,9 +30,9 @@ export const metadata: Metadata = {
   title: siteConfig.seo.title,
   description: siteConfig.seo.description,
   icons: {
-    icon: withBasePath("/123.png"),
-    shortcut: withBasePath("/123.png"),
-    apple: withBasePath("/123.png"),
+    icon: withBasePath("/favicon.png"),
+    shortcut: withBasePath("/favicon.png"),
+    apple: withBasePath("/favicon.png"),
   },
   alternates: {
     canonical: absoluteUrl("/"),
@@ -77,3 +77,4 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
+
