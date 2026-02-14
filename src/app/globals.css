@@ -43,6 +43,11 @@ body {
   overflow-x: clip;
 }
 
+.hero-media-mask {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 74%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 74%, transparent 100%);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -80,6 +85,15 @@ body {
 @media (max-width: 768px) {
   html {
     scroll-behavior: auto;
+  }
+
+  .hero-media-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-media-overlay {
+    background: linear-gradient(120deg, rgba(8, 8, 8, 0.42) 0%, rgba(8, 8, 8, 0.24) 46%, rgba(8, 8, 8, 0.48) 100%);
   }
 
   .card-premium {
