@@ -12,7 +12,7 @@ export function Header() {
             <div className="pointer-events-none absolute inset-x-10 bottom-0 h-px bg-gold-line" />
 
             <div className="flex h-[96px] items-center justify-between gap-2 sm:h-[130px] lg:h-[146px]">
-              <Link href="/" className="flex items-center">
+              <Link href="/" prefetch={false} className="flex items-center">
                 <img
                   src={siteConfig.media.logo}
                   alt={`${siteConfig.brand.name} logo`}
