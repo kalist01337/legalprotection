@@ -53,6 +53,7 @@ export default function HomePage() {
           <div className="hero-media-overlay pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(8,8,8,0.62)_0%,rgba(8,8,8,0.48)_45%,rgba(8,8,8,0.65)_100%)]" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgba(7,7,7,0.88)_0%,rgba(7,7,7,0.35)_48%,rgba(7,7,7,0)_100%)] sm:h-44 lg:h-52" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(to_bottom,rgba(11,11,11,0)_0%,rgba(11,11,11,0.3)_32%,rgba(11,11,11,0.74)_74%,#0b0b0b_100%)] sm:h-44 lg:h-48" />
+          <div className="hero-mobile-bottom-fade pointer-events-none absolute inset-x-0 bottom-0 h-56 md:hidden" />
         </div>
 
         <div className="relative z-10">

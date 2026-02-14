@@ -30,6 +30,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
   const [disableVideo, setDisableVideo] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [showIosPlayButton, setShowIosPlayButton] = useState(false);
+  const [hasStartedPlayback, setHasStartedPlayback] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const errorCountRef = useRef(0);
@@ -47,6 +48,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     if (ios) {
       setDisableVideo(false);
       setShowIosPlayButton(true);
+      setHasStartedPlayback(false);
       return;
     }
 
@@ -94,7 +96,19 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         });
 
     const onPlaying = () => {
-      if (isIOS) setShowIosPlayButton(false);
+      setHasStartedPlayback(true);
+      if (isIOS) {
+        setShowIosPlayButton(false);
+      }
+    };
+
+    const onTimeUpdate = () => {
+      if (video.currentTime > 0.08) {
+        setHasStartedPlayback(true);
+        if (isIOS) {
+          setShowIosPlayButton(false);
+        }
+      }
     };
 
     const onPause = () => {
@@ -104,6 +118,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     };
 
     video.addEventListener("playing", onPlaying);
+    video.addEventListener("timeupdate", onTimeUpdate);
     video.addEventListener("pause", onPause);
 
     if (isIOS) {
@@ -140,6 +155,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         document.removeEventListener("visibilitychange", startOnGesture);
         video.removeEventListener("error", onError);
         video.removeEventListener("playing", onPlaying);
+        video.removeEventListener("timeupdate", onTimeUpdate);
         video.removeEventListener("pause", onPause);
       };
     }
@@ -162,6 +178,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
       observer.disconnect();
       video.removeEventListener("error", onError);
       video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("timeupdate", onTimeUpdate);
       video.removeEventListener("pause", onPause);
     };
   }, [disableVideo, isIOS]);
@@ -197,6 +214,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           muted
           loop
           playsInline
+          controls={isIOS && !hasStartedPlayback}
           preload={isIOS ? "auto" : "metadata"}
           poster={posterSrc}
           disablePictureInPicture
@@ -228,16 +246,22 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
               void videoRef.current.play().catch(() => undefined);
             }
           }}
+          onLoadedData={() => {
+            if (isIOS && videoRef.current) {
+              void videoRef.current.play().catch(() => undefined);
+            }
+          }}
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
       ) : null}
-      {isIOS && !disableVideo && showIosPlayButton ? (
+      {isIOS && !disableVideo && (!hasStartedPlayback || showIosPlayButton) ? (
         <button
           type="button"
           className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 rounded-full border border-goldSoft/60 bg-black/60 px-4 py-2 text-xs font-medium text-ivory backdrop-blur-sm"
           onClick={() => {
             if (videoRef.current) {
+              videoRef.current.muted = true;
               void videoRef.current.play().catch(() => undefined);
             }
           }}

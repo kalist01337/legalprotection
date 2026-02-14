@@ -87,17 +87,33 @@ body {
     scroll-behavior: auto;
   }
 
+  .hero-mobile-bottom-fade {
+    background: linear-gradient(
+      to bottom,
+      rgba(11, 11, 11, 0) 0%,
+      rgba(11, 11, 11, 0.28) 34%,
+      rgba(11, 11, 11, 0.64) 72%,
+      #0b0b0b 100%
+    );
+  }
+
   .hero-media-overlay {
     background: linear-gradient(120deg, rgba(8, 8, 8, 0.58) 0%, rgba(8, 8, 8, 0.34) 46%, rgba(8, 8, 8, 0.62) 100%);
   }
 
+  .about-mobile-image {
+    transform: scale(1.08);
+    transform-origin: center;
+    filter: brightness(1.12) contrast(1.02) saturate(1.03);
+  }
+
   .about-mobile-feather {
     box-shadow:
-      inset 0 0 0 1px rgba(11, 11, 11, 0.72),
-      inset 0 42px 64px -20px rgba(11, 11, 11, 0.84),
-      inset 0 -42px 64px -20px rgba(11, 11, 11, 0.88),
-      inset 42px 0 64px -22px rgba(11, 11, 11, 0.86),
-      inset -42px 0 64px -22px rgba(11, 11, 11, 0.86);
+      inset 0 0 0 1px rgba(11, 11, 11, 0.62),
+      inset 0 36px 58px -18px rgba(11, 11, 11, 0.72),
+      inset 0 -36px 58px -18px rgba(11, 11, 11, 0.76),
+      inset 36px 0 58px -20px rgba(11, 11, 11, 0.74),
+      inset -36px 0 58px -20px rgba(11, 11, 11, 0.74);
   }
 
   .card-premium {
@@ -117,6 +133,16 @@ body {
     .hero-media-mask {
       -webkit-mask-image: none !important;
       mask-image: none !important;
+    }
+
+    .hero-mobile-bottom-fade {
+      background: linear-gradient(
+        to bottom,
+        rgba(11, 11, 11, 0) 0%,
+        rgba(11, 11, 11, 0.34) 30%,
+        rgba(11, 11, 11, 0.72) 68%,
+        #0b0b0b 100%
+      );
     }
   }
 }
