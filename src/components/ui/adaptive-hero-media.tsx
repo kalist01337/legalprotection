@@ -29,9 +29,10 @@ const detectIOS = () => {
 export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProps) {
   const [disableVideo, setDisableVideo] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
-  const [videoFailed, setVideoFailed] = useState(false);
+  const [showIosPlayButton, setShowIosPlayButton] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const errorCountRef = useRef(0);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -45,6 +46,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
 
     if (ios) {
       setDisableVideo(false);
+      setShowIosPlayButton(true);
       return;
     }
 
@@ -60,7 +62,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
   }, []);
 
   useEffect(() => {
-    if (disableVideo || videoFailed || !videoRef.current) return;
+    if (disableVideo || !videoRef.current) return;
 
     const video = videoRef.current;
     video.muted = true;
@@ -70,10 +72,39 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     video.setAttribute("webkit-playsinline", "true");
     video.setAttribute("x5-playsinline", "true");
 
-    const onError = () => setVideoFailed(true);
+    const onError = () => {
+      errorCountRef.current += 1;
+      if (errorCountRef.current <= 6) {
+        window.setTimeout(() => {
+          video.load();
+          void video.play().catch(() => undefined);
+        }, 260 * errorCountRef.current);
+      }
+    };
     video.addEventListener("error", onError);
 
-    const tryPlay = () => video.play().catch(() => undefined);
+    const tryPlay = () =>
+      video
+        .play()
+        .then(() => {
+          if (isIOS) setShowIosPlayButton(false);
+        })
+        .catch(() => {
+          if (isIOS) setShowIosPlayButton(true);
+        });
+
+    const onPlaying = () => {
+      if (isIOS) setShowIosPlayButton(false);
+    };
+
+    const onPause = () => {
+      if (isIOS && document.visibilityState === "visible") {
+        setShowIosPlayButton(true);
+      }
+    };
+
+    video.addEventListener("playing", onPlaying);
+    video.addEventListener("pause", onPause);
 
     if (isIOS) {
       video.load();
@@ -108,6 +139,8 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         document.removeEventListener("touchstart", startOnGesture, { capture: true });
         document.removeEventListener("visibilitychange", startOnGesture);
         video.removeEventListener("error", onError);
+        video.removeEventListener("playing", onPlaying);
+        video.removeEventListener("pause", onPause);
       };
     }
 
@@ -128,8 +161,10 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     return () => {
       observer.disconnect();
       video.removeEventListener("error", onError);
+      video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("pause", onPause);
     };
-  }, [disableVideo, isIOS, videoFailed]);
+  }, [disableVideo, isIOS]);
 
   return (
     <div
@@ -154,10 +189,10 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         loading="eager"
         decoding="async"
       />
-      {!disableVideo && !videoFailed ? (
+      {!disableVideo ? (
         <video
           ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover opacity-72"
+          className="absolute inset-0 h-full w-full object-cover opacity-72 [transform:translateZ(0)]"
           autoPlay
           muted
           loop
@@ -176,7 +211,18 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
               void videoRef.current.play().catch(() => undefined);
             }
           }}
-          onError={() => setVideoFailed(true)}
+          onError={() => {
+            if (videoRef.current) {
+              errorCountRef.current += 1;
+              if (errorCountRef.current <= 6) {
+                const delay = 260 * errorCountRef.current;
+                window.setTimeout(() => {
+                  videoRef.current?.load();
+                  void videoRef.current?.play().catch(() => undefined);
+                }, delay);
+              }
+            }
+          }}
           onCanPlay={() => {
             if (isIOS && videoRef.current) {
               void videoRef.current.play().catch(() => undefined);
@@ -185,6 +231,19 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
+      ) : null}
+      {isIOS && !disableVideo && showIosPlayButton ? (
+        <button
+          type="button"
+          className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 rounded-full border border-goldSoft/60 bg-black/60 px-4 py-2 text-xs font-medium text-ivory backdrop-blur-sm"
+          onClick={() => {
+            if (videoRef.current) {
+              void videoRef.current.play().catch(() => undefined);
+            }
+          }}
+        >
+          Включить видео
+        </button>
       ) : null}
     </div>
   );

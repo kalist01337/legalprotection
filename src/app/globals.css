@@ -87,41 +87,17 @@ body {
     scroll-behavior: auto;
   }
 
-  .hero-media-mask {
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      #000 0%,
-      #000 58%,
-      rgba(0, 0, 0, 0.78) 76%,
-      rgba(0, 0, 0, 0.28) 90%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      #000 0%,
-      #000 58%,
-      rgba(0, 0, 0, 0.78) 76%,
-      rgba(0, 0, 0, 0.28) 90%,
-      transparent 100%
-    );
-  }
-
   .hero-media-overlay {
     background: linear-gradient(120deg, rgba(8, 8, 8, 0.58) 0%, rgba(8, 8, 8, 0.34) 46%, rgba(8, 8, 8, 0.62) 100%);
   }
 
-  .about-bg-image {
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-    transform: scale(1.12);
-    transform-origin: center;
-    filter: brightness(1.35) contrast(1.02) saturate(1.03);
-  }
-
   .about-mobile-feather {
     box-shadow:
-      inset 0 0 0 1px rgba(11, 11, 11, 0.78),
-      inset 0 0 140px 38px rgba(11, 11, 11, 0.76);
+      inset 0 0 0 1px rgba(11, 11, 11, 0.72),
+      inset 0 42px 64px -20px rgba(11, 11, 11, 0.84),
+      inset 0 -42px 64px -20px rgba(11, 11, 11, 0.88),
+      inset 42px 0 64px -22px rgba(11, 11, 11, 0.86),
+      inset -42px 0 64px -22px rgba(11, 11, 11, 0.86);
   }
 
   .card-premium {
@@ -133,6 +109,15 @@ body {
   .site-header-frame {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+}
+
+@media (max-width: 768px) {
+  @supports (-webkit-touch-callout: none) {
+    .hero-media-mask {
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
   }
 }
 
