@@ -123,7 +123,7 @@ body {
   }
 
   .site-header-frame {
-    background: rgba(8, 8, 8, 0.72);
+    background: rgba(8, 8, 8, 0.64);
     backdrop-filter: blur(16px) saturate(112%);
     -webkit-backdrop-filter: blur(16px) saturate(112%);
   }
