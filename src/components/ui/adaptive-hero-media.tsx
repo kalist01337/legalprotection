@@ -17,8 +17,16 @@ type NavigatorWithConnection = Navigator & {
   deviceMemory?: number;
 };
 
+const detectIOS = () => {
+  const ua = navigator.userAgent || "";
+  const isAppleMobile = /iP(hone|ad|od)/.test(ua);
+  const isIPadOS = navigator.platform === "MacIntel" && ((navigator as Navigator & { maxTouchPoints?: number }).maxTouchPoints ?? 0) > 1;
+  return isAppleMobile || isIPadOS;
+};
+
 export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProps) {
   const [useVideo, setUseVideo] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -30,23 +38,41 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     const isDataSaver = Boolean(connection?.saveData);
     const isSlowNetwork = typeof connection?.effectiveType === "string" && connection.effectiveType.includes("2g");
 
-    const ua = navigator.userAgent || "";
-    const isIOS =
-      /iP(hone|ad|od)/.test(ua) || (navigator.platform === "MacIntel" && (navigator as { maxTouchPoints?: number }).maxTouchPoints! > 1);
+    const ios = detectIOS();
+    setIsIOS(ios);
 
     const deviceMemory = nav.deviceMemory ?? 8;
     const cores = navigator.hardwareConcurrency ?? 8;
     const isLowEnd = deviceMemory <= 4 || cores <= 4;
 
-    // iOS Safari can report low core count despite good media playback, so do not block video there.
-    const allowOnMobile = isIOS ? true : !isSmallScreen || !isLowEnd;
-    setUseVideo(!prefersReducedMotion && !isDataSaver && !isSlowNetwork && allowOnMobile);
+    if (prefersReducedMotion) {
+      setUseVideo(false);
+      return;
+    }
+
+    // iOS: force-enable video to avoid false negatives from network/device heuristics.
+    if (ios) {
+      setUseVideo(true);
+      return;
+    }
+
+    const allowOnMobile = !isSmallScreen || !isLowEnd;
+    setUseVideo(!isDataSaver && !isSlowNetwork && allowOnMobile);
   }, []);
 
   useEffect(() => {
-    if (!useVideo || !containerRef.current || !videoRef.current) return;
+    if (!useVideo || !videoRef.current) return;
 
     const video = videoRef.current;
+    video.muted = true;
+
+    if (isIOS) {
+      void video.play().catch(() => undefined);
+      return;
+    }
+
+    if (!containerRef.current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -60,7 +86,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
 
     observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, [useVideo]);
+  }, [useVideo, isIOS]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -80,9 +106,14 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           poster={posterSrc}
           disablePictureInPicture
+          onCanPlay={() => {
+            if (isIOS && videoRef.current) {
+              void videoRef.current.play().catch(() => undefined);
+            }
+          }}
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
