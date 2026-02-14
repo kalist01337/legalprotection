@@ -14,8 +14,10 @@ type RevealProps = {
 export function Reveal({ children, className, delay = 0, replay = false, amount = 0.2 }: RevealProps) {
   const reduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     const update = () => setIsMobile(mediaQuery.matches);
     update();
@@ -23,8 +25,8 @@ export function Reveal({ children, className, delay = 0, replay = false, amount 
     return () => mediaQuery.removeEventListener("change", update);
   }, []);
 
-  // Mobile: avoid expensive whileInView animation to keep scroll smooth.
-  if (reduceMotion || isMobile) {
+  // Never hide content on SSR/first paint.
+  if (!isMounted || reduceMotion || isMobile) {
     return <div className={className}>{children}</div>;
   }
 

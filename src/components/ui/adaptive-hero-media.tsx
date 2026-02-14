@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -20,84 +20,79 @@ type NavigatorWithConnection = Navigator & {
 const detectIOS = () => {
   const ua = navigator.userAgent || "";
   const isAppleMobile = /iP(hone|ad|od)/.test(ua);
-  const isIPadOS = navigator.platform === "MacIntel" && ((navigator as Navigator & { maxTouchPoints?: number }).maxTouchPoints ?? 0) > 1;
+  const isIPadOS =
+    navigator.platform === "MacIntel" &&
+    ((navigator as Navigator & { maxTouchPoints?: number }).maxTouchPoints ?? 0) > 1;
   return isAppleMobile || isIPadOS;
 };
 
 export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProps) {
-  const [useVideo, setUseVideo] = useState(false);
+  const [disableVideo, setDisableVideo] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isSmallScreen = window.matchMedia("(max-width: 767px)").matches;
-    const nav = navigator as NavigatorWithConnection;
-    const connection = nav.connection;
-    const isDataSaver = Boolean(connection?.saveData);
-    const isSlowNetwork = typeof connection?.effectiveType === "string" && connection.effectiveType.includes("2g");
+    if (prefersReducedMotion) {
+      setDisableVideo(true);
+      return;
+    }
 
     const ios = detectIOS();
     setIsIOS(ios);
 
+    if (ios) {
+      setDisableVideo(false);
+      return;
+    }
+
+    const nav = navigator as NavigatorWithConnection;
+    const connection = nav.connection;
+    const isDataSaver = Boolean(connection?.saveData);
+    const isSlowNetwork =
+      typeof connection?.effectiveType === "string" &&
+      connection.effectiveType.includes("2g");
+    const isSmallScreen = window.matchMedia("(max-width: 767px)").matches;
     const deviceMemory = nav.deviceMemory ?? 8;
     const cores = navigator.hardwareConcurrency ?? 8;
     const isLowEnd = deviceMemory <= 4 || cores <= 4;
-
-    if (prefersReducedMotion) {
-      setUseVideo(false);
-      return;
-    }
-
-    // iOS: force-enable video to avoid false negatives from network/device heuristics.
-    if (ios) {
-      setUseVideo(true);
-      return;
-    }
-
     const allowOnMobile = !isSmallScreen || !isLowEnd;
-    setUseVideo(!isDataSaver && !isSlowNetwork && allowOnMobile);
+
+    setDisableVideo(isDataSaver || isSlowNetwork || !allowOnMobile);
   }, []);
 
   useEffect(() => {
-    if (!useVideo || videoFailed || !videoRef.current) return;
+    if (disableVideo || videoFailed || !videoRef.current) return;
 
     const video = videoRef.current;
     video.muted = true;
-    const markFailed = () => setVideoFailed(true);
-    const markReady = () => setVideoReady(true);
-    const tryPlay = () => video.play().then(markReady).catch(() => undefined);
+    video.defaultMuted = true;
+    video.playsInline = true;
 
-    video.addEventListener("error", markFailed);
-    video.addEventListener("loadedmetadata", markReady);
-    video.addEventListener("canplay", markReady);
-    video.addEventListener("playing", markReady);
+    const onError = () => setVideoFailed(true);
+    video.addEventListener("error", onError);
+
+    const tryPlay = () => video.play().catch(() => undefined);
 
     if (isIOS) {
+      video.load();
+      void tryPlay();
+      const t1 = window.setTimeout(() => void tryPlay(), 400);
+      const t2 = window.setTimeout(() => void tryPlay(), 1200);
       const startOnGesture = () => {
         void tryPlay();
       };
-
-      const retryTimer = window.setTimeout(() => {
-        void tryPlay();
-      }, 650);
-
-      video.load();
-      void tryPlay();
-      window.addEventListener("touchstart", startOnGesture, { passive: true, once: true });
-      window.addEventListener("pointerdown", startOnGesture, { passive: true, once: true });
+      window.addEventListener("touchstart", startOnGesture, { passive: true });
+      window.addEventListener("pointerdown", startOnGesture, { passive: true });
 
       return () => {
-        window.clearTimeout(retryTimer);
+        window.clearTimeout(t1);
+        window.clearTimeout(t2);
         window.removeEventListener("touchstart", startOnGesture);
         window.removeEventListener("pointerdown", startOnGesture);
-        video.removeEventListener("error", markFailed);
-        video.removeEventListener("loadedmetadata", markReady);
-        video.removeEventListener("canplay", markReady);
-        video.removeEventListener("playing", markReady);
+        video.removeEventListener("error", onError);
       };
     }
 
@@ -117,18 +112,9 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
     observer.observe(containerRef.current);
     return () => {
       observer.disconnect();
-      video.removeEventListener("error", markFailed);
-      video.removeEventListener("loadedmetadata", markReady);
-      video.removeEventListener("canplay", markReady);
-      video.removeEventListener("playing", markReady);
+      video.removeEventListener("error", onError);
     };
-  }, [useVideo, isIOS, videoFailed]);
-
-  useEffect(() => {
-    if (!useVideo) return;
-    setVideoReady(false);
-    setVideoFailed(false);
-  }, [useVideo, videoSrc]);
+  }, [disableVideo, isIOS, videoFailed]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -140,12 +126,10 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
         loading="eager"
         decoding="async"
       />
-      {useVideo && !videoFailed ? (
+      {!disableVideo && !videoFailed ? (
         <video
           ref={videoRef}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
-            videoReady ? "opacity-72" : "opacity-0"
-          }`}
+          className="absolute inset-0 h-full w-full object-cover opacity-72"
           autoPlay
           muted
           loop
@@ -153,7 +137,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           preload="metadata"
           poster={posterSrc}
           disablePictureInPicture
-          onLoadedData={() => setVideoReady(true)}
+          src={videoSrc}
           onError={() => setVideoFailed(true)}
           onCanPlay={() => {
             if (isIOS && videoRef.current) {
