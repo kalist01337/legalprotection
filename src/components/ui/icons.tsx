@@ -78,6 +78,15 @@ export function MessageIcon({ className }: IconProps) {
   );
 }
 
+export function WhatsAppIcon({ className }: IconProps) {
+  return (
+    <IconBase className={className}>
+      <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L4 20l3.8-.7A8.5 8.5 0 1 0 12 3.5Z" />
+      <path d="M9.1 8.8c.2-.4.6-.5 1-.2l1 .8c.3.2.4.6.2.9l-.4.7c.5 1 1.3 1.7 2.3 2.2l.6-.4c.4-.2.8-.1 1 .2l.8 1c.2.4.1.8-.2 1-1 .6-2.2.5-3.5-.2a8.3 8.3 0 0 1-3.4-3.5c-.7-1.2-.7-2.4-.2-3.5Z" />
+    </IconBase>
+  );
+}
+
 export function PenSquareIcon({ className }: IconProps) {
   return (
     <IconBase className={className}>

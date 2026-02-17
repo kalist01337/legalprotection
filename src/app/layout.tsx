@@ -1,6 +1,7 @@
-﻿import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { FloatingSocial } from "@/components/ui/floating-social";
 import { absoluteUrl, siteConfig, withBasePath } from "@/config/site";
 
 const serif = Playfair_Display({
@@ -73,8 +74,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ru">
       <body className={`${serif.variable} ${sans.variable} ${accent.variable} bg-ink font-sans text-ivory antialiased`}>
         {children}
+        <FloatingSocial />
       </body>
     </html>
   );
 }
-
