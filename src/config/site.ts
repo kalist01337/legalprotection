@@ -79,8 +79,8 @@ export const siteConfig = {
     phoneHref: "tel:+77056693036",
     whatsappNumber: "77056693036",
     whatsappHref: "https://wa.me/77056693036",
-    telegramHref: "#",
-    instagramHref: "#",
+    telegramHref: "https://t.me/+77056693036",
+    instagramHref: "https://instagram.com/legal_protectionkz",
     email: "Legalprotectionkz@gmail.com",
     emailHref: "mailto:Legalprotectionkz@gmail.com",
     addressLines: [
