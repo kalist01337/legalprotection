@@ -38,7 +38,7 @@ export function ContactSection() {
       </div>
 
       <div className="card-premium rounded-3xl p-5 sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-[0.96fr_1.04fr] lg:items-stretch">
+        <div className="grid gap-5 lg:grid-cols-2 lg:items-stretch">
           <aside>
             <div className="rounded-2xl border border-gold/30 bg-white/[0.02] p-4 sm:p-5">
               <dl className="space-y-4">
