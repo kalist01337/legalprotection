@@ -1,10 +1,9 @@
-﻿import { Reveal } from "@/components/ui/reveal";
 import { siteConfig } from "@/config/site";
 
 export function SubscriptionSection() {
   return (
     <section id="about-service" className="section-shell pb-24">
-      <Reveal replay className="card-premium rounded-3xl px-6 py-10 sm:px-10 sm:py-12">
+      <div className="card-premium rounded-3xl px-6 py-10 sm:px-10 sm:py-12">
         <div className="max-w-3xl">
           <h2 className="font-serif text-3xl text-ivory md:text-4xl">{siteConfig.subscription.heading}</h2>
           <p className="mt-5 leading-relaxed text-ivory/75">{siteConfig.subscription.text}</p>
@@ -24,7 +23,7 @@ export function SubscriptionSection() {
         >
           Выбрать пакет
         </a>
-      </Reveal>
+      </div>
     </section>
   );
 }

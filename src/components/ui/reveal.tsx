@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode, useEffect, useState } from "react";
@@ -13,20 +13,14 @@ type RevealProps = {
 
 export function Reveal({ children, className, delay = 0, replay = false, amount = 0.2 }: RevealProps) {
   const reduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
-    const update = () => setIsMobile(mediaQuery.matches);
-    update();
-    mediaQuery.addEventListener("change", update);
-    return () => mediaQuery.removeEventListener("change", update);
   }, []);
 
   // Never hide content on SSR/first paint.
-  if (!isMounted || reduceMotion || isMobile) {
+  if (!isMounted || reduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
