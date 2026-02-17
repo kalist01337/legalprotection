@@ -104,8 +104,6 @@ export function ContactSection() {
               </a>
               <a
                 href={siteConfig.contacts.instagramHref}
-                target="_blank"
-                rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-gold/45 px-4 py-2 text-goldSoft transition hover:bg-gold/10"
               >
                 <InstagramIcon className="h-4 w-4" />
