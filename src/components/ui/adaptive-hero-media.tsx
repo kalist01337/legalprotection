@@ -42,13 +42,6 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
       return;
     }
 
-    const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
-    if (isSmallScreen) {
-      // Mobile: improve LCP and data usage by keeping the hero as a static poster.
-      setDisableVideo(true);
-      return;
-    }
-
     const ios = detectIOS();
     setIsIOS(ios);
 
