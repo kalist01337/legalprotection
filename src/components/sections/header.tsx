@@ -73,19 +73,26 @@ export function Header() {
 
               <div className="hidden w-full overflow-x-auto rounded-2xl border border-gold/25 bg-white/[0.02] p-[2px] sm:block">
                 <div className="mx-auto flex min-w-max items-center justify-center">
-                  {siteConfig.nav.map((item, index) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      className="group relative shrink-0 rounded-xl px-3 py-1 text-center font-serif text-[0.64rem] uppercase tracking-[0.18em] text-ivory/90 transition hover:bg-gold/10 hover:text-goldSoft sm:px-5 sm:py-0.5 sm:text-[0.74rem]"
-                    >
-                      {item.label}
-                      <span className="pointer-events-none absolute inset-x-3 -bottom-px h-px scale-x-0 bg-gold/80 transition-transform duration-300 group-hover:scale-x-100" />
-                      {index < siteConfig.nav.length - 1 ? (
-                        <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-gold/35">|</span>
-                      ) : null}
-                    </a>
-                  ))}
+                  {siteConfig.nav.map((item, index) => {
+                    const Icon = mobileNavIcons[item.href] ?? CircleQuestionIcon;
+
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        className="group relative shrink-0 rounded-xl px-3 py-1 text-center font-serif text-[0.64rem] uppercase tracking-[0.18em] text-ivory/90 transition hover:bg-gold/10 hover:text-goldSoft sm:px-5 sm:py-0.5 sm:text-[0.74rem]"
+                      >
+                        <span className="inline-flex items-center gap-1.5">
+                          <Icon className="h-3.5 w-3.5 text-goldSoft/95" />
+                          <span>{item.label}</span>
+                        </span>
+                        <span className="pointer-events-none absolute inset-x-3 -bottom-px h-px scale-x-0 bg-gold/80 transition-transform duration-300 group-hover:scale-x-100" />
+                        {index < siteConfig.nav.length - 1 ? (
+                          <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-gold/35">|</span>
+                        ) : null}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </nav>
