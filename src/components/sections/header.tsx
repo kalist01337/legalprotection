@@ -26,8 +26,8 @@ export function Header() {
                 <img
                   src={siteConfig.media.logo}
                   alt={`${siteConfig.brand.name} logo`}
-                  width={1320}
-                  height={391}
+                  width={720}
+                  height={213}
                   decoding="async"
                   fetchPriority="high"
                   className="-my-3 block h-auto w-[168px] max-w-full object-contain brightness-[0.82] contrast-90 saturate-75 blur-0 [transform:translateZ(0)] sm:-my-4 sm:w-[282px] sm:blur-[0.35px] lg:-my-5 lg:w-[366px] xl:w-[440px]"
