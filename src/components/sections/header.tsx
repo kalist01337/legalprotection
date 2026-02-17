@@ -1,7 +1,7 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import type { ComponentType } from "react";
 import { BriefcaseIcon, CheckCircleIcon, CircleQuestionIcon, MessageIcon, PhoneIcon, ScaleIcon, ShieldIcon } from "@/components/ui/icons";
-import { siteConfig } from "@/config/site";
+import { siteConfig, withBasePath } from "@/config/site";
 
 const mobileNavIcons: Record<string, ComponentType<{ className?: string }>> = {
   "#packages": BriefcaseIcon,
@@ -25,11 +25,12 @@ export function Header() {
               <Link href="/" prefetch={false} className="flex items-center">
                 <img
                   src={siteConfig.media.logo}
+                  srcSet={`${withBasePath("/gold-360.png")} 360w, ${siteConfig.media.logo} 720w, ${withBasePath("/gold.png")} 1320w`}
+                  sizes="(max-width: 639px) 168px, (max-width: 1023px) 282px, (max-width: 1279px) 366px, 440px"
                   alt={`${siteConfig.brand.name} logo`}
                   width={720}
                   height={213}
                   decoding="async"
-                  fetchPriority="high"
                   className="-my-3 block h-auto w-[168px] max-w-full object-contain brightness-[0.82] contrast-90 saturate-75 blur-0 [transform:translateZ(0)] sm:-my-4 sm:w-[282px] sm:blur-[0.35px] lg:-my-5 lg:w-[366px] xl:w-[440px]"
                   style={{ imageRendering: "auto" }}
                 />

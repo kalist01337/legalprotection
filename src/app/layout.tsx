@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope, Playfair_Display } from "next/font/google";
+import { Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { FloatingSocial } from "@/components/ui/floating-social";
 import { absoluteUrl, siteConfig, withBasePath } from "@/config/site";
@@ -15,14 +15,6 @@ const sans = Manrope({
   subsets: ["latin", "cyrillic"],
   variable: "--font-sans",
   weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const accent = Cormorant_Garamond({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-accent",
-  weight: ["500", "600", "700"],
-  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -72,7 +64,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body className={`${serif.variable} ${sans.variable} ${accent.variable} bg-ink font-sans text-ivory antialiased`}>
+      <body className={`${serif.variable} ${sans.variable} bg-ink font-sans text-ivory antialiased`}>
         {children}
         <FloatingSocial />
       </body>
