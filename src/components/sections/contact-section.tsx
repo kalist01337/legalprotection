@@ -42,44 +42,44 @@ export function ContactSection() {
           <aside>
             <div className="rounded-2xl border border-gold/30 bg-white/[0.02] p-4 sm:p-5">
               <dl className="space-y-4">
-                <div className="grid grid-cols-[18px_1fr] items-start gap-x-3">
-                  <PhoneIcon className="mt-1 h-4 w-4 text-goldSoft/90" />
-                  <div>
-                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">Телефон</dt>
-                    <dd className="mt-1">
-                      <a
-                        href={siteConfig.contacts.phoneHref}
-                        className="font-serif text-xl leading-none text-ivory transition hover:text-goldSoft"
-                      >
-                        {siteConfig.contacts.phoneDisplay}
-                      </a>
-                    </dd>
-                  </div>
+                <div>
+                  <dt className="flex items-start gap-x-3 text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">
+                    <PhoneIcon className="mt-[2px] h-4 w-4 shrink-0 text-goldSoft/90" />
+                    <span>Телефон</span>
+                  </dt>
+                  <dd className="mt-1 pl-7">
+                    <a
+                      href={siteConfig.contacts.phoneHref}
+                      className="font-serif text-xl leading-none text-ivory transition hover:text-goldSoft"
+                    >
+                      {siteConfig.contacts.phoneDisplay}
+                    </a>
+                  </dd>
                 </div>
 
-                <div className="grid grid-cols-[18px_1fr] items-start gap-x-3">
-                  <MailIcon className="mt-1 h-4 w-4 text-goldSoft/90" />
-                  <div>
-                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">Email</dt>
-                    <dd className="mt-1">
-                      <a
-                        href={siteConfig.contacts.emailHref}
-                        className="font-serif text-[15px] tracking-[0.01em] text-ivory/92 transition hover:text-goldSoft hover:underline"
-                      >
-                        {siteConfig.contacts.email}
-                      </a>
-                    </dd>
-                  </div>
+                <div>
+                  <dt className="flex items-start gap-x-3 text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">
+                    <MailIcon className="mt-[2px] h-4 w-4 shrink-0 text-goldSoft/90" />
+                    <span>Email</span>
+                  </dt>
+                  <dd className="mt-1 pl-7">
+                    <a
+                      href={siteConfig.contacts.emailHref}
+                      className="font-serif text-[15px] tracking-[0.01em] text-ivory/92 transition hover:text-goldSoft hover:underline"
+                    >
+                      {siteConfig.contacts.email}
+                    </a>
+                  </dd>
                 </div>
 
-                <div className="grid grid-cols-[18px_1fr] items-start gap-x-3">
-                  <MapPinIcon className="mt-1 h-4 w-4 text-goldSoft/90" />
-                  <div>
-                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">Адрес</dt>
-                    <dd className="mt-1 font-serif text-[15px] leading-relaxed tracking-[0.01em] text-ivory/92">
-                      {fullAddress}
-                    </dd>
-                  </div>
+                <div>
+                  <dt className="flex items-start gap-x-3 text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">
+                    <MapPinIcon className="mt-[2px] h-4 w-4 shrink-0 text-goldSoft/90" />
+                    <span>Адрес</span>
+                  </dt>
+                  <dd className="mt-1 pl-7 font-serif text-[15px] leading-relaxed tracking-[0.01em] text-ivory/92">
+                    {fullAddress}
+                  </dd>
                 </div>
               </dl>
             </div>

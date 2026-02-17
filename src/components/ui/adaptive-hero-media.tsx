@@ -216,7 +216,7 @@ export function AdaptiveHeroMedia({ videoSrc, posterSrc }: AdaptiveHeroMediaProp
           loop
           playsInline
           controls={isIOS && !hasStartedPlayback}
-          preload={isIOS ? "auto" : "metadata"}
+          preload={isIOS ? "auto" : "none"}
           poster={posterSrc}
           disablePictureInPicture
           src={videoSrc}

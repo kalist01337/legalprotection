@@ -8,7 +8,6 @@ const serif = Playfair_Display({
   subsets: ["latin", "cyrillic"],
   variable: "--font-serif",
   weight: ["600", "700"],
-  preload: false,
   display: "swap",
 });
 
