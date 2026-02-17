@@ -14,6 +14,7 @@ export function FloatingSocial() {
         {socialLinks.map((item) => {
           const Icon = item.icon;
           const isExternal = item.href.startsWith("http");
+          const openInCurrentTab = item.label === "Instagram";
 
           return (
             <a
@@ -21,8 +22,8 @@ export function FloatingSocial() {
               href={item.href}
               aria-label={item.label}
               title={item.label}
-              target={isExternal ? "_blank" : undefined}
-              rel={isExternal ? "noreferrer" : undefined}
+              target={isExternal && !openInCurrentTab ? "_blank" : undefined}
+              rel={isExternal && !openInCurrentTab ? "noreferrer" : undefined}
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-gold/25 bg-white/[0.02] text-ivory/85 transition hover:-translate-x-0.5 hover:border-gold/60 hover:bg-gold/12 hover:text-goldSoft"
             >
               <Icon className="h-5 w-5" />
