@@ -38,7 +38,7 @@ export function ContactSection() {
       </div>
 
       <div className="card-premium rounded-3xl p-5 sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-2 lg:items-stretch">
+        <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
           <aside>
             <div className="rounded-2xl border border-gold/30 bg-white/[0.02] p-4 sm:p-5">
               <dl className="space-y-4">
@@ -148,7 +148,7 @@ export function ContactSection() {
             </div>
           </aside>
 
-          <div className="overflow-hidden rounded-2xl border border-gold/30 bg-[#0b0b0b] lg:min-h-[500px]">
+          <div className="overflow-hidden rounded-2xl border border-gold/30 bg-[#0b0b0b] lg:h-[420px] lg:self-start">
             {isMapVisible ? (
               <TwoGisMap lat={mapCenter.lat} lon={mapCenter.lon} className="h-[320px] w-full sm:h-[350px] lg:h-full" />
             ) : (

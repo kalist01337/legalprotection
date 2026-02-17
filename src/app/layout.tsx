@@ -7,7 +7,8 @@ import { absoluteUrl, siteConfig, withBasePath } from "@/config/site";
 const serif = Playfair_Display({
   subsets: ["latin", "cyrillic"],
   variable: "--font-serif",
-  weight: ["500", "600", "700"],
+  weight: ["600", "700"],
+  preload: false,
   display: "swap",
 });
 

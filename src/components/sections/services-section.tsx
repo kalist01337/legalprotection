@@ -13,18 +13,21 @@ export function ServicesSection() {
         <h2 className="mt-2 font-serif text-3xl text-ivory md:text-4xl">Юридические услуги</h2>
       </Reveal>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {siteConfig.services.map((service, index) => (
-          <Reveal key={service} delay={Math.min(index * 0.04, 0.36)} amount={0.12} className="h-full">
-            <article className="card-premium h-[144px] rounded-2xl p-4 text-sm leading-relaxed text-ivory/80 transition duration-200 hover:-translate-y-1 hover:border-gold/55">
+      <Reveal amount={0.12}>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {siteConfig.services.map((service) => (
+            <article
+              key={service}
+              className="card-premium h-[144px] rounded-2xl p-4 text-sm leading-relaxed text-ivory/80 transition duration-200 hover:-translate-y-1 hover:border-gold/55"
+            >
               <div className="mb-2.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-gold/35 bg-gold/10 text-goldSoft">
                 <ScaleIcon className="h-3.5 w-3.5" />
               </div>
               <p>{service}</p>
             </article>
-          </Reveal>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }
