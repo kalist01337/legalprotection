@@ -62,9 +62,9 @@ export default function HomePage() {
       </div>
 
       <main className="pt-8 sm:pt-10 lg:pt-12">
-        <PackagesSection />
         <ServicesSection />
         <SubscriptionSection />
+        <PackagesSection />
         <AboutSection />
         <ReviewsSection />
         <FAQSection />

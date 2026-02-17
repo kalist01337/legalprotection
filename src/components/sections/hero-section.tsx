@@ -20,7 +20,9 @@ export function HeroSection() {
           {siteConfig.brand.subtitle}
         </p>
         <h1 className="font-serif text-[2rem] leading-tight text-ivory sm:text-4xl md:text-5xl xl:text-6xl">{siteConfig.hero.title}</h1>
-        <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-ivory/75 sm:mt-7 sm:text-base md:text-lg">{siteConfig.hero.text}</p>
+        {siteConfig.hero.text ? (
+          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-ivory/75 sm:mt-7 sm:text-base md:text-lg">{siteConfig.hero.text}</p>
+        ) : null}
 
         <div className="mt-8 grid gap-2.5 sm:mt-9 sm:flex sm:flex-wrap">
           <a
