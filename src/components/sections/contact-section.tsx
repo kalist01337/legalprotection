@@ -32,9 +32,9 @@ export function ContactSection() {
       <div className="mb-8">
         <p className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.25em] text-goldSoft/80">
           <PhoneIcon className="h-4 w-4" />
-          РљРѕРЅС‚Р°РєС‚С‹
+          Контакты
         </p>
-        <h2 className="mt-2 font-serif text-3xl text-ivory md:text-4xl">РљРѕРЅС‚Р°РєС‚РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ</h2>
+        <h2 className="mt-2 font-serif text-3xl text-ivory md:text-4xl">Контактная информация</h2>
       </div>
 
       <div className="card-premium rounded-3xl p-5 sm:p-6">
@@ -45,7 +45,7 @@ export function ContactSection() {
                 <div className="grid grid-cols-[18px_1fr] items-start gap-x-3">
                   <PhoneIcon className="mt-1 h-4 w-4 text-goldSoft/90" />
                   <div>
-                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">РўРµР»РµС„РѕРЅ</dt>
+                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">Телефон</dt>
                     <dd className="mt-1">
                       <a
                         href={siteConfig.contacts.phoneHref}
@@ -75,7 +75,7 @@ export function ContactSection() {
                 <div className="grid grid-cols-[18px_1fr] items-start gap-x-3">
                   <MapPinIcon className="mt-1 h-4 w-4 text-goldSoft/90" />
                   <div>
-                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">РђРґСЂРµСЃ</dt>
+                    <dt className="text-[11px] uppercase tracking-[0.22em] text-goldSoft/70">Адрес</dt>
                     <dd className="mt-1 font-serif text-[15px] leading-relaxed tracking-[0.01em] text-ivory/92">
                       {fullAddress}
                     </dd>
@@ -90,7 +90,7 @@ export function ContactSection() {
                 className="inline-flex items-center gap-2 rounded-full border border-gold/45 px-4 py-2 text-goldSoft transition hover:bg-gold/10"
               >
                 <PhoneIcon className="h-4 w-4" />
-                РџРѕР·РІРѕРЅРёС‚СЊ
+                Позвонить
               </a>
               <a
                 href={siteConfig.contacts.whatsappHref}
@@ -122,18 +122,18 @@ export function ContactSection() {
 
             <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
               <div className="rounded-2xl border border-gold/25 bg-white/[0.02] p-3.5">
-                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">Р“СЂР°С„РёРє</p>
-                <p className="mt-1.5 text-sm text-ivory/85">Р•Р¶РµРґРЅРµРІРЅРѕ СЃ 09:00 РґРѕ 20:00</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">График</p>
+                <p className="mt-1.5 text-sm text-ivory/85">Ежедневно с 09:00 до 20:00</p>
               </div>
 
               <div className="rounded-2xl border border-gold/25 bg-white/[0.02] p-3.5">
-                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">РћС‚РІРµС‚</p>
-                <p className="mt-1.5 text-sm text-ivory/85">Р’ РјРµСЃСЃРµРЅРґР¶РµСЂР°С… РѕР±С‹С‡РЅРѕ 10-20 РјРёРЅСѓС‚</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">Ответ</p>
+                <p className="mt-1.5 text-sm text-ivory/85">В мессенджерах обычно 10-20 минут</p>
               </div>
 
               <div className="rounded-2xl border border-gold/25 bg-white/[0.02] p-3.5">
-                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">Р¤РѕСЂРјР°С‚</p>
-                <p className="mt-1.5 text-sm text-ivory/85">РћС‡РЅР°СЏ Рё РѕРЅР»Р°Р№РЅ РєРѕРЅСЃСѓР»СЊС‚Р°С†РёСЏ</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">Формат</p>
+                <p className="mt-1.5 text-sm text-ivory/85">Очная и онлайн консультация</p>
               </div>
 
               <a
@@ -142,8 +142,8 @@ export function ContactSection() {
                 rel="noreferrer"
                 className="rounded-2xl border border-gold/25 bg-white/[0.02] p-3.5 text-left transition hover:bg-gold/10"
               >
-                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">РњР°СЂС€СЂСѓС‚</p>
-                <p className="mt-1.5 text-sm text-ivory/85">РћС‚РєСЂС‹С‚СЊ РІ 2Р“РРЎ</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-goldSoft/75">Маршрут</p>
+                <p className="mt-1.5 text-sm text-ivory/85">Открыть в 2ГИС</p>
               </a>
             </div>
           </aside>
@@ -153,13 +153,13 @@ export function ContactSection() {
               <TwoGisMap lat={mapCenter.lat} lon={mapCenter.lon} className="h-[320px] w-full sm:h-[350px] lg:h-full" />
             ) : (
               <div className="flex h-[320px] w-full flex-col items-center justify-center gap-4 bg-[#0b0b0b] px-4 text-center sm:h-[350px] lg:h-full">
-                <p className="max-w-sm text-sm text-ivory/75">РљР°СЂС‚Р° 2Р“РРЎ Р·Р°РіСЂСѓР¶Р°РµС‚СЃСЏ РїРѕ РєР»РёРєСѓ</p>
+                <p className="max-w-sm text-sm text-ivory/75">Карта 2ГИС загружается по клику</p>
                 <button
                   type="button"
                   onClick={() => setIsMapVisible(true)}
                   className="inline-flex items-center gap-2 rounded-full border border-gold/45 px-5 py-2 text-sm text-goldSoft transition hover:bg-gold/10"
                 >
-                  РџРѕРєР°Р·Р°С‚СЊ РєР°СЂС‚Сѓ 2Р“РРЎ
+                  Показать карту 2ГИС
                 </button>
               </div>
             )}
