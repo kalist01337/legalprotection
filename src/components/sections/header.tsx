@@ -54,21 +54,24 @@ export function Header() {
             </div>
 
             <nav className="mt-0">
-              <div className="grid grid-cols-3 gap-2 rounded-2xl border border-gold/25 bg-white/[0.02] p-2 sm:hidden">
-                {siteConfig.nav.map((item) => {
-                  const Icon = mobileNavIcons[item.href] ?? CircleQuestionIcon;
+              <div className="rounded-2xl border border-gold/25 bg-white/[0.02] p-1.5 sm:hidden">
+                <div className="flex items-center justify-between gap-1.5">
+                  {siteConfig.nav.map((item) => {
+                    const Icon = mobileNavIcons[item.href] ?? CircleQuestionIcon;
 
-                  return (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      className="inline-flex min-h-[54px] flex-col items-center justify-center gap-1 rounded-xl border border-gold/20 bg-white/[0.01] px-1.5 py-1 text-center text-[0.6rem] leading-tight text-ivory/90 transition hover:border-gold/45 hover:bg-gold/10 hover:text-goldSoft"
-                    >
-                      <Icon className="h-4 w-4 text-goldSoft/95" />
-                      <span>{item.label}</span>
-                    </a>
-                  );
-                })}
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        aria-label={item.label}
+                        title={item.label}
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/20 bg-white/[0.01] text-ivory/90 transition hover:border-gold/45 hover:bg-gold/10 hover:text-goldSoft"
+                      >
+                        <Icon className="h-3.5 w-3.5 text-goldSoft/95" />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
 
               <div className="hidden w-full overflow-x-auto rounded-2xl border border-gold/25 bg-white/[0.02] p-[2px] sm:block">
