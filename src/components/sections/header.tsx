@@ -1,6 +1,16 @@
 ﻿import Link from "next/link";
-import { MessageIcon, PhoneIcon } from "@/components/ui/icons";
+import type { ComponentType } from "react";
+import { BriefcaseIcon, CheckCircleIcon, CircleQuestionIcon, MessageIcon, PhoneIcon, ScaleIcon, ShieldIcon } from "@/components/ui/icons";
 import { siteConfig } from "@/config/site";
+
+const mobileNavIcons: Record<string, ComponentType<{ className?: string }>> = {
+  "#packages": BriefcaseIcon,
+  "#services": ScaleIcon,
+  "#about": ShieldIcon,
+  "#reviews": CheckCircleIcon,
+  "#faq": CircleQuestionIcon,
+  "#contacts": MessageIcon,
+};
 
 export function Header() {
   return (
@@ -44,7 +54,24 @@ export function Header() {
             </div>
 
             <nav className="mt-0">
-              <div className="w-full overflow-x-auto rounded-2xl border border-gold/25 bg-white/[0.02] p-[2px]">
+              <div className="grid grid-cols-3 gap-2 rounded-2xl border border-gold/25 bg-white/[0.02] p-2 sm:hidden">
+                {siteConfig.nav.map((item) => {
+                  const Icon = mobileNavIcons[item.href] ?? CircleQuestionIcon;
+
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="inline-flex min-h-[54px] flex-col items-center justify-center gap-1 rounded-xl border border-gold/20 bg-white/[0.01] px-1.5 py-1 text-center text-[0.6rem] leading-tight text-ivory/90 transition hover:border-gold/45 hover:bg-gold/10 hover:text-goldSoft"
+                    >
+                      <Icon className="h-4 w-4 text-goldSoft/95" />
+                      <span>{item.label}</span>
+                    </a>
+                  );
+                })}
+              </div>
+
+              <div className="hidden w-full overflow-x-auto rounded-2xl border border-gold/25 bg-white/[0.02] p-[2px] sm:block">
                 <div className="mx-auto flex min-w-max items-center justify-center">
                   {siteConfig.nav.map((item, index) => (
                     <a
